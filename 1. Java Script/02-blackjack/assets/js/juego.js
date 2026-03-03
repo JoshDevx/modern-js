@@ -53,7 +53,24 @@ const pedirCarta = () => {
     return carta;
 }
 
-const valorCarta = () => {
+// Creamos una funcion para devolver el valor de una carta
+const valorCarta = ( carta ) => {
+    // Extraemos el valor de la carta
+    // Substring: permite extraer valores de una cadena
+    // cadena.substring(indiceA[, indiceB'])
+    const valor = carta.substring(0, carta.length - 1);
     
+    return ( isNaN( valor ) ) ? (( valor === 'A' ) ? 11 : 10):
+                                    puntos = valor * 1
+
+    // Condicion para ver si devuelve un numero
+    //if( isNaN( valor ) ) {
+    //    puntos = (valor === 'A') ? 11 : 10;
+    //} else {
+    //    console.log('Es un numero');
+     //   puntos = valor * 1
+    //}
 }
 
+let valor = valorCarta( pedirCarta() );
+console.log( {valor} );
