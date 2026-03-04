@@ -20,7 +20,13 @@ let puntosComputadora = 0;
 
 //Referencias HTML
 const btnPedir = document.querySelector('#btnPedir');
+const btnNuevo = document.querySelector('#btnNuevo');
+const btnDetener = document.querySelector('#btnDetener');
 const small = document.querySelectorAll('small');
+const divCartasJugador = document.querySelector('#jugador-cartas');
+const divCartasComputadora = document.querySelector('#computadora-cartas');
+
+
 // Funcion para crear nuestra baraja de cartas
 const crearDeck = () => {
     // Creamos una lista de cartas 
@@ -79,13 +85,69 @@ const valorCarta = ( carta ) => {
 
 let valor = valorCarta( pedirCarta() );
 
+// turno Computadora
+const turnoComputador = (puntosMinimos) => {
+    do{
+        const carta = pedirCarta();
+        puntosComputadora = puntosComputadora + valorCarta( carta );
+        small[1].innerText = (puntosComputadora)
+
+        const imgCarta = document.createElement('img'); 
+        imgCarta.src = `assets/cartas/${carta}.png`;
+        imgCarta.classList.add('carta');
+        divCartasComputadora.append( imgCarta );
+        if(puntosMinimos > 21){
+            break;
+        }
+    }while(  puntosComputadora < puntosMinimos && puntosComputadora <= 21)
+}
+
+
+
+
+
 //Eventos
 btnPedir.addEventListener('click', () => {
     const carta = pedirCarta();
     puntosJugador = puntosJugador + valorCarta( carta );
     small[0].innerText = (puntosJugador)
 
-    
+    const imgCarta = document.createElement('img'); 
+    imgCarta.src = `assets/cartas/${carta}.png`;
+    imgCarta.classList.add('carta');
+    divCartasJugador.append( imgCarta );
+
+    if(puntosJugador > 21){
+        console.warn('Lo siento, perdiste!');
+        btnPedir.disabled = true;
+        btnDetener.disabled = true;
+        turnoComputador(puntosJugador);
+        alert('Gano computadora!')
+    } else if(puntosJugador === 21){
+        console.warn('21: Genial!');
+        btnDetener.disabled = true;    
+        btnPedir.disabled = true;
+        turnoComputador(puntosJugador);
+    }
 
 } )
 
+btnDetener.addEventListener('click', () =>{
+    btnPedir.disabled = true;
+    btnDetener.disabled = true;
+    turnoComputador(puntosJugador);
+});
+
+const mensaje = (puntosJug, puntosPc) => {
+    if(puntosJug > 0 && puntosComputadora > 0){
+        if(puntosJug === 21 && puntosPc === 21){
+            alert('Nadie gano');
+        }else if(puntosJug <= 21){
+            alert('Gano Jugador')
+        }else{
+            alert('Gano computadora')
+        }
+    }
+} 
+
+console.log(mensaje(puntosJugador,puntosComputadora))
