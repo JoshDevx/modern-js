@@ -15,6 +15,12 @@ const tipos = ['C', 'D', 'H', 'S'];
 // Lista de Cartas de letras
 const especiales = ['A', 'J','K'];
 
+let puntosJugador = 0;
+let puntosComputadora = 0;
+
+//Referencias HTML
+const btnPedir = document.querySelector('#btnPedir');
+const small = document.querySelectorAll('small');
 // Funcion para crear nuestra baraja de cartas
 const crearDeck = () => {
     // Creamos una lista de cartas 
@@ -36,7 +42,6 @@ const crearDeck = () => {
     //console.log(deck)
     // Baraja aleatoriamente el arreglo
     deck = _.shuffle( deck );
-    console.log(deck);
     return deck;
 
 }
@@ -73,4 +78,14 @@ const valorCarta = ( carta ) => {
 }
 
 let valor = valorCarta( pedirCarta() );
-console.log( {valor} );
+
+//Eventos
+btnPedir.addEventListener('click', () => {
+    const carta = pedirCarta();
+    puntosJugador = puntosJugador + valorCarta( carta );
+    small[0].innerText = (puntosJugador)
+
+    
+
+} )
+
